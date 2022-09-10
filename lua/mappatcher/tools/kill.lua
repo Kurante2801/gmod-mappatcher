@@ -11,9 +11,21 @@ function TOOL:EntSetup( ent )
 end
 
 function TOOL:EntStartTouch( ent )
-    if ent:IsPlayer() then
-        ent:Kill()
-        return
+    if not ent:IsPlayer() then return end
+    ent:Kill()
+
+    -- Hide and Seek: Turn to seeker on death
+    if GAMEMODE.FolderName == "hideandseek" then
+        if not GAMEMODE.SeekerBlinded and GAMEMODE.RoundState == ROUND_ACTIVE then
+            ent:SetTeam(TEAM_SEEK)
+            GAMEMODE:RoundCheck()
+        end
+
+        timer.Simple(5, function()
+            if IsValid(ent) and not ent:Alive() then
+                ent:Spawn()
+            end
+        end)
     end
 end
 
