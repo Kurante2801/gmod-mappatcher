@@ -20,6 +20,13 @@ function TOOL:ReadFromBuffer( buffer, len )
     self.name = buffer:ReadString( )
 end
 
+function TOOL.DataFunction(data, tbl)
+    tbl = TOOL:GetBase().DataFunction(data, tbl)
+    tbl.name = data.name
+
+    return tbl
+end
+
 function TOOL:SetupObjectPanel( panel )
     local DLabel = vgui.Create( "DLabel", panel )
     DLabel:SetTextColor( Color( 255, 255, 255, 255 ) )

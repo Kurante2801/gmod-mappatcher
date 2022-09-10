@@ -92,6 +92,15 @@ function TOOL:ReadFromBuffer( buffer, len )
     self.hurt_amount = buffer:ReadInt32( )
     self.damage_type = buffer:ReadUInt32( )
 end
+function TOOL.DataFunction(data, tbl)
+    tbl = TOOL:GetBase().DataFunction(data, tbl)
+    tbl.time_before_hurt = data.time_before_hurt
+    tbl.hurt_interval = data.hurt_interval
+    tbl.hurt_amount = data.hurt_amount
+    tbl.damage_type = data.damage_type
+
+    return tbl
+end
 --------------------------------------------------------------------------------
 function TOOL:EntSetup( ent )
     self.objects = {}

@@ -23,3 +23,7 @@ function TOOL:ReadFromBuffer( buffer, len )
     self.point = buffer:ReadVector( )
 end
 --------------------------------------------------------------------------------
+function TOOL.DataFunction(data, tbl)
+    tbl.point = data.point
+    return tbl
+end

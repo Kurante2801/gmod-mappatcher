@@ -95,4 +95,12 @@ function TOOL:ReadFromBuffer( buffer, len )
     self.ang = buffer:ReadUInt16()
     self.name = buffer:ReadString()
 end
+
+function TOOL.DataFunction(data, tbl)
+    tbl.point = data.point
+    tbl.ang = data.ang
+    tbl.name = data.name
+
+    return tbl
+end
 --------------------------------------------------------------------------------

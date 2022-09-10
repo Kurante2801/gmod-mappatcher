@@ -121,3 +121,11 @@ hook.Add( "PhysgunPickup", "MapPatcherObject", function( ply, ent )
         return false
     end
 end, HOOK_HIGH )
+
+MapPatcher.WriteTable = function(tbl)
+    net.WriteString(util.TableToJSON(tbl))
+end
+
+MapPatcher.ReadTable = function(tbl)
+    return util.JSONToTable(net.ReadString())
+end

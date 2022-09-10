@@ -135,6 +135,51 @@ local data_block_writers = {
 }
 
 function MapPatcher.SaveObjectsToFile()
+    file.CreateDir("mappatcher")
+    local filename = string.format("mappatcher/%s.json", string.lower(game.GetMap()))
+
+    local objects = {}
+
+    for object_id, object in pairs(MapPatcher.Objects) do
+        if not IsValid(object) then continue end
+
+        local data = object:DataFunction({})
+        data.class_name = object.ClassName
+
+        table.insert(objects, data)
+    end
+
+    file.Write(filename, util.TableToJSON(objects, true))
+end
+
+function MapPatcher.LoadObjectsFromFile()
+    -- Clear old objects
+    for object_id, object in pairs(MapPatcher.Objects) do
+        object:Terminate()
+    end
+    MapPatcher.Objects = {}
+
+    local filename = string.format("mappatcher/%s.json", string.lower(game.GetMap()))
+    if not file.Exists(filename, "DATA") then return end
+
+    local objects = util.JSONToTable(file.Read(filename, "DATA"))
+    if not objects then
+        error("[MapPatcher] Objects JSON file is corrupted for " .. filename)
+    end
+
+    for _, data in ipairs(objects) do
+        local object = MapPatcher.NewToolObject(data.class_name)
+        if not object then continue end
+        object.DataFunction(data, object)
+
+        local object_id = #MapPatcher.Objects + 1
+        object.ID = object_id
+        MapPatcher.Objects[object_id] = object
+        object:Initialize()
+    end
+end
+
+function MapPatcher.SaveObjectsToFileOld()
     file.CreateDir( "mappatcher" )
     local filename = "mappatcher/" .. string.lower( game.GetMap() ) .. ".dat"
     local fl = file.Open( filename, "wb", "DATA" )
@@ -173,8 +218,7 @@ function MapPatcher.SaveObjectsToFile()
     fl:Close()
 end
 
-
-function MapPatcher.LoadObjectsFromFile()
+function MapPatcher.LoadObjectsFromFileOld()
     -- Clear old objects
     for object_id, object in pairs(MapPatcher.Objects) do
         object:Terminate()

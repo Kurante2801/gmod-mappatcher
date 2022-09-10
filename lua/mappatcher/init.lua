@@ -25,7 +25,7 @@ function MapPatcher.NetworkObjects( objects, ply )
     for k, object in pairs(objects) do
         net.WriteUInt( object.ID, 16 )
         net.WriteString( object.ClassName )
-        object:WriteToBuffer( BufferInterface("net") )
+        MapPatcher.WriteTable(object:DataFunction({}))
         object:SessionWriteToBuffer( BufferInterface("net") )
     end
 
@@ -78,7 +78,8 @@ net.Receive( "mappatcher_submit", function( len, ply )
     end
 
     local object = MapPatcher.NewToolObject( object_class )
-    object:ReadFromBuffer( BufferInterface("net") )
+    object.DataFunction(MapPatcher.ReadTable(), object)
+    --object:ReadFromBuffer( BufferInterface("net") )
     object.ID = object_id
 
     if object:ShouldSave() then

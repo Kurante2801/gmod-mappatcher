@@ -40,6 +40,16 @@ function TOOL:SessionReadFromBuffer( buffer, len )
 end
 
 --------------------------------------------------------------------------------
+function TOOL.DataFunction(data, tbl)
+    tbl.points = {}
+
+    for _, point in ipairs(data.points) do
+        table.insert(tbl.points, point)
+    end
+
+    return tbl
+end
+--------------------------------------------------------------------------------
 function TOOL:PreviewPaint( panel, w, h )
     local x, y = panel:LocalToScreen( 0, 0 )
     cam.Start3D(Vector(-25,-25,25), Angle(35,45,0), 90, x, y, w, h)

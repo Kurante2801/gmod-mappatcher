@@ -10,7 +10,7 @@ TOOL.TextureText = "#mappatcher.tools.custom.title"
 
 function TOOL:WriteToBuffer( buffer )
     TOOL:GetBase().WriteToBuffer( self, buffer )
-    self.data.color = self.color
+    self.color = self.color
     buffer:WriteString( util.TableToJSON(self.data) )
 end
 
@@ -18,6 +18,21 @@ function TOOL:ReadFromBuffer( buffer, len )
     TOOL:GetBase().ReadFromBuffer(self, buffer)
     self.data = util.JSONToTable( buffer:ReadString( ) )
     self.color = self.data.color
+end
+
+function TOOL.DataFunction(data, tbl)
+    tbl = TOOL:GetBase().DataFunction(data, tbl)
+
+    tbl.clip_bullet = data.clip_bullet
+    tbl.color = data.color
+    tbl.clip_prop = data.clip_prop
+    tbl.clip_other = data.clip_other
+    tbl.group = data.group
+    tbl.group_invert = data.group_invert
+    tbl.clip_player = data.clip_player
+    tbl.texture = data.texture
+
+    return tbl
 end
 
 function TOOL:SetupObjectPanel( panel )
@@ -73,7 +88,7 @@ function TOOL:EntSetup( ent )
         ent:SetRenderBounds( min, max )
         
 
-        if self.data.texture == "forcefield" then
+        if self.texture == "forcefield" then
             ent.snd_forcefield_loop = "mappatcher_forcefield_loop_"..(ent:EntIndex())
             sound.Add( {
                 name = "mappatcher_forcefield_loop_"..(ent:EntIndex()),
@@ -103,19 +118,19 @@ function TOOL:SetupObjectPanel( panel )
     local cbxClipPlayer = vgui.Create( "DCheckBoxLabel", panel )
     cbxClipPlayer:SetPos( 55, 12 )
     cbxClipPlayer:SetText( "#mappatcher.tools.custom.settings.player" )
-    cbxClipPlayer:SetValue( self.data.clip_player )
+    cbxClipPlayer:SetValue( self.clip_player )
     cbxClipPlayer:SizeToContents()
     cbxClipPlayer.OnChange = function( panel, val )
-        self.data.clip_player = val
+        self.clip_player = val
     end
 
     local cbxClipProps = vgui.Create( "DCheckBoxLabel", panel )
     cbxClipProps:SetPos( 120, 12 )
     cbxClipProps:SetText( "#mappatcher.tools.custom.settings.props" )
-    cbxClipProps:SetValue( self.data.clip_prop )
+    cbxClipProps:SetValue( self.clip_prop )
     cbxClipProps:SizeToContents()
     cbxClipProps.OnChange = function( panel, val )
-        self.data.clip_prop = val
+        self.clip_prop = val
     end
 
     --[[
@@ -151,21 +166,21 @@ function TOOL:SetupObjectPanel( panel )
     cmbGroup:SetPos( 55, 35 )
     cmbGroup:SetSize( 110, 20 )
     for key, group in pairs(MapPatcher.Groups.GetGroups()) do
-        cmbGroup:AddChoice( MapPatcher.Groups.GetName(group), group, self.data.group == group)
+        cmbGroup:AddChoice( MapPatcher.Groups.GetName(group), group, self.group == group)
     end
     cmbGroup.OnSelect = function( panel, index, value, data )
-        self.data.group = data
+        self.group = data
     end
 
 
     local cbxGroupInvert = vgui.Create( "DCheckBoxLabel", panel )
     cbxGroupInvert:SetPos( 170, 37 )
     cbxGroupInvert:SetText( "#mappatcher.tools.custom.settings.invert" )
-    cbxGroupInvert:SetValue( self.data.group_invert )
+    cbxGroupInvert:SetValue( self.group_invert )
     cbxGroupInvert:SizeToContents()
 
     cbxGroupInvert.OnChange = function( panel, val )
-        self.data.group_invert = val
+        self.group_invert = val
     end
 
     local lblTexture = vgui.Create( "DLabel", panel )
@@ -177,11 +192,11 @@ function TOOL:SetupObjectPanel( panel )
     local cmbGroup = vgui.Create( "DComboBox", panel )
     cmbGroup:SetPos( 55, 60 )
     cmbGroup:SetSize( 110, 20 )
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.invisible", "", self.data.texture == "")
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.forcefield", "forcefield", self.data.texture == "forcefield")
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.solid", "solid", self.data.texture == "solid")
+    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.invisible", "", self.texture == "")
+    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.forcefield", "forcefield", self.texture == "forcefield")
+    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.solid", "solid", self.texture == "solid")
     cmbGroup.OnSelect = function( panel, index, value, data )
-        self.data.texture = data
+        self.texture = data
     end
 
 
@@ -197,9 +212,8 @@ function TOOL:SetupObjectPanel( panel )
     colorPicker:SetPalette( true )
     colorPicker:SetAlphaBar( true )
     colorPicker:SetWangs( true )
-    colorPicker:SetColor( self.data.color )
+    colorPicker:SetColor( self.color )
     colorPicker.ValueChanged = function( panel, col )
-        self.data.color = col
         self.color = col
     end
 end
@@ -218,13 +232,13 @@ end
 
 function TOOL:EntShouldCollide( ent )
 
-    if self.data.clip_player and ent:IsPlayer() then
-        if not self.data.group_invert then
-            return MapPatcher.Groups.Check( self.data.group, ent )
+    if self.clip_player and ent:IsPlayer() then
+        if not self.group_invert then
+            return MapPatcher.Groups.Check( self.group, ent )
         else
-            return not MapPatcher.Groups.Check( self.data.group, ent )
+            return not MapPatcher.Groups.Check( self.group, ent )
         end
-    elseif self.data.clip_prop and ent:GetMoveType() == MOVETYPE_VPHYSICS then
+    elseif self.clip_prop and ent:GetMoveType() == MOVETYPE_VPHYSICS then
         return true
     end
 
@@ -235,14 +249,14 @@ end
 local mat_forcefield = Material("effects/combineshield/comshieldwall2")
 local mat_solid = Material( "color" )
 function TOOL:EntDraw( ent )
-    if self.data.texture == "forcefield" then
+    if self.texture == "forcefield" then
         self:BuildMesh()
         render.SetMaterial( mat_forcefield )
 
         for i=1, 8 do
             self.render_mesh:Draw()
         end
-    elseif self.data.texture == "solid" then
+    elseif self.texture == "solid" then
         self:BuildMesh()
         render.SetMaterial( mat_solid )
         self.render_mesh:Draw()
@@ -255,7 +269,7 @@ for i=1, 4 do
 end
 
 function TOOL:EntImpactTrace( ent, trace, dmgtype, customimpactname )
-    if self.data.texture == "forcefield" then
+    if self.texture == "forcefield" then
         if IsFirstTimePredicted() then
             EmitSound( hit_sounds[math.random(1,#hit_sounds)], trace.HitPos, ent:EntIndex(), CHAN_AUTO, 1, 80, 0, 100 )
         end

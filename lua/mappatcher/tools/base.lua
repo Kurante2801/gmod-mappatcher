@@ -22,6 +22,15 @@ function TOOL:GetClassName()
 end
 
 function TOOL:GetCopy()
+    local object = MapPatcher.NewToolObject(self.ClassName)
+    object.DataFunction(self, object)
+    object.ID = self.ID
+    object.entity = self.entity
+    object.entity_id = self.entity_id
+    return object
+end
+
+function TOOL:GetCopyOld()
     local object = MapPatcher.NewToolObject( self.ClassName )
     local tmp = Stream()
     self:WriteToBuffer( tmp )
@@ -68,6 +77,10 @@ function TOOL:SessionWriteToBuffer( buffer )
 end
 
 function TOOL:SessionReadFromBuffer( buffer, len )
+end
+
+function TOOL.DataFunction(data, tbl)
+    return tbl
 end
 --------------------------------------------------------------------------------
 function TOOL:GetOrigin( )
