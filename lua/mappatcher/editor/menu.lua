@@ -82,16 +82,22 @@ function PANEL:Init()
     tools_list:SetSpaceY( 5 )
     tools_list:SetSpaceX( 5 )
 
-    for k, class_name in pairs(MapPatcher.Editor.Tools) do
-        local tool_class = MapPatcher.Tools[class_name]
-        if not tool_class then continue end
+    local excludes = {
+        ["base_brush"] = true,
+        ["base_point"] = true,
+        ["base"] = true,
+        ["null"] = true,
+    }
+    for class, tool in SortedPairs(MapPatcher.Tools) do
+        if excludes[class] then continue end
+
         local tool_button = tools_list:Add( "DButton" )
         tool_button:SetSize( 87, 43 )
-        tool_button:SetText(tool_class.TextureText)
+        tool_button:SetText(tool.TextureText)
         tool_button:SetTextColor( Color( 255, 255, 255 ) )
         tool_button:SetFont( "MapPatcherHelp" )
 
-        local button_color = table.Copy(tool_class.TextureColor)
+        local button_color = table.Copy(tool.TextureColor)
         button_color.a = 255
         local button_color_dark = Color(button_color.r*0.7, button_color.g*0.7, button_color.b*0.7, 255 )
         
@@ -105,7 +111,7 @@ function PANEL:Init()
             draw.RoundedBox( 5, 0, 0, w, h, button_color_dark )
             draw.RoundedBox( 5, 2, 2, w-4, h-4, self:IsDown() and button_color_dark or button_color )
 
-            if MapPatcher.Editor.Tool == class_name then
+            if MapPatcher.Editor.Tool == class then
                 surface.SetDrawColor( 255, 255, 255 )
                 for i=1, 2 do
                     surface.DrawOutlinedRect( (2+i), (2+i), w-(2+i)*2, h-(2+i)*2 )
@@ -114,7 +120,7 @@ function PANEL:Init()
         end
 
         function tool_button:DoClick()
-            MapPatcher.Editor.SetTool(class_name)
+            MapPatcher.Editor.SetTool(class)
         end
     end
 

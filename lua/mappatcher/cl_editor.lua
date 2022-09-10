@@ -5,20 +5,6 @@ local BufferInterface = MapPatcher.Libs.BufferInterface
 MapPatcher.Editor = MapPatcher.Editor or {}
 local Editor = MapPatcher.Editor
 
-Editor.Tools = {
-    "custom",
-    "playerclip",
-    "propclip",
-    "bulletclip",
-    "clip",
-    "forcefield",
-    "hurt",
-    "kill",
-    "remove",
-    "teleport",
-    "tp_target",
-}
-
 function Editor.Start( )
     if xgui then xgui.hide() end -- Hide ULX XGUI
     if gui.IsGameUIVisible() then gui.HideGameUI() end
@@ -26,7 +12,7 @@ function Editor.Start( )
     Editor.StartUI()
     Editor.LoadMapClipBrushes()
     if not Editor.Object then
-        Editor.SetTool(Editor.Tools[1])
+        Editor.SetTool("custom")
     end
     Editor.UpdateMenu( )
 
