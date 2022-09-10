@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Does not let the bullets to go pass through."
 --------------------------------------------------------------------------------
@@ -16,3 +17,4 @@ function TOOL:EntShouldCollide( ent )
     return true
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

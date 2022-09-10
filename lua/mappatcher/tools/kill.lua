@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Kill players on touch."
 --------------------------------------------------------------------------------
@@ -20,3 +21,4 @@ function TOOL:EntShouldCollide( ent )
     return false
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

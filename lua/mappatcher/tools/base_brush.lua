@@ -1,6 +1,7 @@
-local quickhull = MapPatcher.Libs.quickhull
-
+local TOOL = {}
 TOOL.Base = "base"
+
+local quickhull = MapPatcher.Libs.quickhull
 
 --------------------------------------------------------------------------------
 function TOOL:WriteToBuffer( buffer )
@@ -216,3 +217,5 @@ function TOOL:PostCleanupMap( )
         self:UpdateEntity( )
     end
 end
+
+return MapPatcher.RegisterTool(TOOL)

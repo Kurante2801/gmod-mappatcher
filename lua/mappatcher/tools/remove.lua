@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Removes any entities that touches this brush. Except for players, in which they would just silently die."
 --------------------------------------------------------------------------------
@@ -23,3 +24,4 @@ function TOOL:EntShouldCollide( ent )
     return false
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

@@ -1,4 +1,4 @@
-local TOOL = TOOL
+local TOOL = {}
 
 TOOL.Base = "base_brush"
 TOOL.Description = "A combination of various other tools + extra. Probably something I should have done initially."
@@ -282,3 +282,4 @@ function TOOL:EntImpactTrace( ent, trace, dmgtype, customimpactname )
     end
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

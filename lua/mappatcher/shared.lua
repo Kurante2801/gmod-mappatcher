@@ -31,6 +31,45 @@ function MapPatcher.HasAccess( ply )
 end
 
 function MapPatcher.LoadTools()
+    MapPatcher.LoadingTools = true
+    local files = file.Find("mappatcher/tools/*.lua", "LUA")
+
+    for _, filename in ipairs(files) do
+        AddCSLuaFile("mappatcher/tools/" .. filename)
+        local tool = include("mappatcher/tools/" .. filename)
+        tool.ClassName = string.lower(string.StripExtension(filename))
+
+        function tool:__index(key)
+            local meta = getmetatable(self)
+
+            local val = rawget(self, key) or (self ~= meta and meta[key])
+            if val then return val end
+
+            local base = rawget(self,"Base")
+            if base then
+                return MapPatcher.Tools[base][key]
+            end
+        end
+
+        function tool:__tostring()
+            return self:ToString()
+        end
+
+        MapPatcher.Tools[tool.ClassName] = setmetatable(tool, tool)
+    end
+
+    MapPatcher.LoadingTools = false
+end
+
+function MapPatcher.RegisterTool(tool)
+    if MapPatcher.LoadingTools then
+        return tool
+    else
+        MapPatcher.LoadTools()
+    end
+end
+
+function MapPatcher.LoadToolsOld()
     local files = file.Find( "mappatcher/tools/*.lua", "LUA" )
 
     local _TOOL = TOOL

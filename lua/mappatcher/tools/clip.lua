@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Collides with everything."
 --------------------------------------------------------------------------------
@@ -15,3 +16,4 @@ function TOOL:EntShouldCollide( ent )
     return true
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

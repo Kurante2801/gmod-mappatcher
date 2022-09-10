@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Works similarly to clip brush, but with addition of forcefield effect."
 --------------------------------------------------------------------------------
@@ -84,3 +85,4 @@ function TOOL:EntImpactTrace( ent, trace, dmgtype, customimpactname )
     return true
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

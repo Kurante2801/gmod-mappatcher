@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Version = 0
 
 local Stream = MapPatcher.Libs.Stream
@@ -145,3 +146,5 @@ end
 
 function TOOL:EntRemove( ent )
 end
+
+return MapPatcher.RegisterTool(TOOL)

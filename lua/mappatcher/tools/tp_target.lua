@@ -1,4 +1,4 @@
-local TOOL = TOOL
+local TOOL = {}
 
 TOOL.Base = "base_point"
 TOOL.Description = "Teleport target used by teleport brush. You can find more detail by reading description by selecting teleport brush. The teleport target will be oriented to the same direction as editor camera."
@@ -104,3 +104,4 @@ function TOOL.DataFunction(data, tbl)
     return tbl
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

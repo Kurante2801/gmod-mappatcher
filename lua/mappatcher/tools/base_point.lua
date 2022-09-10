@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base"
 --------------------------------------------------------------------------------
 function TOOL:ShouldSave( )
@@ -27,3 +28,5 @@ function TOOL.DataFunction(data, tbl)
     tbl.point = data.point
     return tbl
 end
+
+return MapPatcher.RegisterTool(TOOL)

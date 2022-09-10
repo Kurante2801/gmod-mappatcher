@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Doesn't let entities pass through that has prop physics (e.g. props, grenades, etc)."
 
@@ -17,3 +18,4 @@ function TOOL:EntShouldCollide( ent )
     return ent:GetMoveType() == MOVETYPE_VPHYSICS
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)

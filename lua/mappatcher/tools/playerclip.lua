@@ -1,3 +1,4 @@
+local TOOL = {}
 TOOL.Base = "base_brush"
 TOOL.Description = "Collides only with players."
 
@@ -17,3 +18,4 @@ function TOOL:EntShouldCollide( ent )
     return ent:IsPlayer()
 end
 --------------------------------------------------------------------------------
+return MapPatcher.RegisterTool(TOOL)
