@@ -42,7 +42,6 @@ function TOOL:UpdateEntity()
     entity:SetPos(self:GetOrigin())
     entity:SetAngles(Angle(0, self.ang, 0))
 
-    print(entity)
     self.entity = entity
 end
 
@@ -60,7 +59,6 @@ hook.Add("PlayerSelectSpawn", "MapPatcher", function(ply)
 
     for _, object in ipairs(MapPatcher.Objects) do
         if object.ClassName == "spawnpoint" then
-            print(object.entity)
             table.insert(spawns, object.entity)
         end
     end
