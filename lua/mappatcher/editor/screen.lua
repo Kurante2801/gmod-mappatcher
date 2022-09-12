@@ -104,26 +104,28 @@ function PANEL:UpdateMenu( )
     self.menu:UpdateMenu( )
 end
 
-function PANEL:OnMousePressed( key_code )
-    if not self.CameraControl then -- Restore control
-        self:SetCameraControl( true )
-        return 
+function PANEL:OnMousePressed(key_code)
+    -- Restore control
+    if not self.CameraControl then
+        self:SetCameraControl(true)
+
+        return
     end
 
     if self.m_Buttons[bind2key("+menu")] then return end
 
-    if key_code == MOUSE_LEFT then
-        MapPatcher.Editor.LeftClick( self.m_PointPos + self.m_PointNormal*math.random()*0.1, self.m_ViewAngles )
-    elseif key_code == MOUSE_RIGHT then
-        local tr = util.TraceHull( {
-            start = self.m_ViewPos,
-            endpos = self.m_ViewPos + self.m_ViewAngles:Forward() * self.m_PointDist,
-            filter = {},
-            mins = Vector( -0.1, -0.1, -0.1 ),
-            maxs = Vector( 0.1, 0.1, 0.1 )
-        } )
+    local tr = {
+        start = self.m_ViewPos,
+        endpos = self.m_ViewPos + self.m_ViewAngles:Forward() * self.m_PointDist,
+        filter = {},
+        mins = Vector(-0.1, -0.1, -0.1),
+        maxs = Vector(0.1, 0.1, 0.1)
+    }
 
-        MapPatcher.Editor.RightClick( tr )
+    if key_code == MOUSE_LEFT then
+        MapPatcher.Editor.LeftClick(self.m_PointPos + self.m_PointNormal * math.random() * 0.1, self.m_ViewAngles, util.TraceHull(tr))
+    elseif key_code == MOUSE_RIGHT then
+        MapPatcher.Editor.RightClick(util.TraceHull(tr))
     end
 end
 

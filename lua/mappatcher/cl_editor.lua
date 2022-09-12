@@ -29,8 +29,8 @@ function Editor.Stop( )
     net.SendToServer()
 end
 
-function Editor.LeftClick( pos, ang )
-    Editor.Object:LeftClick( pos, ang )
+function Editor.LeftClick( pos, ang, tr )
+    Editor.Object:LeftClick( pos, ang, tr )
 end
 
 function Editor.RightClick( tr )
