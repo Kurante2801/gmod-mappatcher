@@ -219,6 +219,13 @@ end
 
 local point_pos = Vector()
 local material_hammer_playerclip = Editor.GenerateToolMaterial( "mappatcher_hammer_playerclip", Color(255,0,255,200), "Player Clip" )
+local material_hammer_ladder = Editor.GenerateToolMaterial("material_hammer_ladder", Color(255, 255, 0, 200), "Use Ladder")
+
+local LADDER_MIN = Vector(16, 16, 0)
+local LADDER_MAX = Vector(-16, -16, 72)
+local COLOR_WHITE = Color(255, 255, 255)
+local ANGLE_ZERO = Angle(0, 0, 0)
+
 hook.Add( "PostDrawOpaqueRenderables", "MapPatcherEditor", function( bDrawingDepth, bDrawingSkybox )
     if not MapPatcher.CVarDraw:GetBool() and not Editor.Enabled then return end
     render.OverrideDepthEnable( true, true )
@@ -255,6 +262,13 @@ hook.Add( "PostDrawOpaqueRenderables", "MapPatcherEditor", function( bDrawingDep
         for _, mesh in pairs(Editor.MapClipBrushes) do
             mesh:Draw() -- Draw the mesh
         end
+    end
+
+    render.SetMaterial(material_hammer_ladder)
+    for _, ent in ipairs(ents.FindByClass("func_useableladder")) do
+        local pos = ent:GetPos()
+        render.DrawBox( pos + ent:GetInternalVariable("point0"), ANGLE_ZERO, LADDER_MIN, LADDER_MAX, COLOR_WHITE )
+        render.DrawBox( pos + ent:GetInternalVariable("point1"), ANGLE_ZERO, LADDER_MIN, LADDER_MAX, COLOR_WHITE )
     end
 
     render.OverrideDepthEnable( false )

@@ -7,6 +7,9 @@ util.AddNetworkString( "mappatcher_update" )
 util.AddNetworkString( "mappatcher_reload_entities" )
 util.AddNetworkString( "mappatcher_editor_pvs" )
 
+-- Ladder model
+resource.AddWorkshop("2947045146")
+
 MapPatcher.Brushes = MapPatcher.Brushes or {}
 
 function MapPatcher.StartEditMode( ply )

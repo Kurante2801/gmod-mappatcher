@@ -1,5 +1,6 @@
 local TOOL = {}
 TOOL.Base = "base"
+TOOL.Model = "models/props_phx/misc/gibs/egg_piece4.mdl"
 
 local quickhull = MapPatcher.Libs.quickhull
 
@@ -165,6 +166,7 @@ function TOOL:UpdateEntity( )
     end
 
     entity:SetPos( origin )
+    entity:SetModel( self.Model )
 
     entity:PhysicsInitConvex( points_local )
     local physobj = entity:GetPhysicsObject()
