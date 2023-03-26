@@ -227,9 +227,9 @@ local COLOR_WHITE = Color(255, 255, 255)
 local ANGLE_ZERO = Angle(0, 0, 0)
 
 hook.Add( "PostDrawOpaqueRenderables", "MapPatcherEditor", function( bDrawingDepth, bDrawingSkybox )
-    if not MapPatcher.CVarDraw:GetBool() and not Editor.Enabled then return end
+    if (not MapPatcher.CVarDraw:GetBool() or not MapPatcher.HasAccess( LocalPlayer() )) and not Editor.Enabled then return end
+
     render.OverrideDepthEnable( true, true )
-    
 
     if Editor.Enabled then
         -- Draw main cursor point
