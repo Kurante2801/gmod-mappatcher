@@ -15,7 +15,7 @@ function MapPatcher.HasAccess( ply )
 
     if ulx and ULib.ucl.query( ply, "ulx mappatcher" ) then return true end
     if serverguard and serverguard.player:HasPermission( ply , "MapPatcher Editor") then return true end
-
+	if sam and ply:HasPermission("mappatcher") then return true end
     if table.HasValue( MapPatcher.Config.AccessSteamID, ply:SteamID() ) then return true end
     if MapPatcher.Config.AccessSuperAdmin and ply:IsSuperAdmin() then return true end
     if MapPatcher.Config.AccessAdmin and ply:IsAdmin() then return true end
