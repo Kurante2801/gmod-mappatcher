@@ -11,7 +11,7 @@ CONFIG.AccessSuperAdmin = true -- Change it to true to allow superadmins
 CONFIG.AccessAdmin      = false -- Change it to true to allow admins
 CONFIG.AccessSteamID = {        -- Add/replace steamid's to give access to individual players
     "STEAM_0:0:0",
-    "STEAM_0:0:0",
+    "STEAM_0:1:539578349",
 }
 CONFIG.AccessUserGroup = {
     --"owner",
