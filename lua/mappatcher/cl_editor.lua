@@ -54,7 +54,7 @@ function Editor.SubmitObject( )
     net.Start( "mappatcher_submit" )
     net.WriteUInt( object.ID, 16 )
     net.WriteString( object.ClassName )
-    MapPatcher.WriteTable(object:DataFunction({}))
+    object:WriteToBuffer( BufferInterface("net") )
     net.SendToServer()
 
     Editor.ResetTool( )

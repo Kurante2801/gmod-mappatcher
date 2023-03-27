@@ -31,18 +31,6 @@ function TOOL:GetCopy()
     return object
 end
 
-function TOOL:GetCopyOld()
-    local object = MapPatcher.NewToolObject( self.ClassName )
-    local tmp = Stream()
-    self:WriteToBuffer( tmp )
-    tmp:Seek(0)
-    object:ReadFromBuffer( tmp )
-    object.ID = self.ID
-    object.entity = self.entity
-    object.entity_id = self.entity_id
-    return object
-end
-
 function TOOL:IsValid()
     return self:IsObject()
 end

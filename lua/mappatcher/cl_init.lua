@@ -19,9 +19,8 @@ net.Receive( "mappatcher_update", function( len )
         object.ID = object_id
         MapPatcher.Objects[object_id] = object
 
-        object.DataFunction(MapPatcher.ReadTable(), object)
         local buffer = BufferInterface("net")
-        --object:ReadFromBuffer( buffer )
+        object:ReadFromBuffer( buffer )
         object:SessionReadFromBuffer( buffer )
 
         object:Initialize()

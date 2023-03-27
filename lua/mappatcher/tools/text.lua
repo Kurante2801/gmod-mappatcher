@@ -263,6 +263,42 @@ function TOOL.DataFunction(data, tbl)
     return tbl
 end
 
+function TOOL:WriteToBuffer( buffer )
+    buffer:WriteFloat(self.ang.p)
+    buffer:WriteFloat(self.ang.y)
+    buffer:WriteFloat(self.ang.r)
+
+    buffer:WriteString(self.text)
+
+    buffer:WriteFloat(self.color.r)
+    buffer:WriteFloat(self.color.g)
+    buffer:WriteFloat(self.color.b)
+    buffer:WriteFloat(self.color.a)
+
+    buffer:WriteString(self.font)
+    buffer:WriteFloat(self.size)
+    buffer:WriteUInt8(self.secondary)
+    buffer:WriteFloat(self.secondary_value)
+end
+
+function TOOL:ReadFromBuffer( buffer )
+    self.ang.p = buffer:ReadFloat()
+    self.ang.y = buffer:ReadFloat()
+    self.ang.r = buffer:ReadFloat()
+
+    self.text = buffer:ReadString()
+
+    self.color.r = buffer:ReadFloat()
+    self.color.g = buffer:ReadFloat()
+    self.color.b = buffer:ReadFloat()
+    self.color.a = buffer:ReadFloat()
+
+    self.font = buffer:ReadString()
+    self.size = buffer:ReadFloat()
+    self.secondary = buffer:ReadUInt8()
+    self.secondary_value = buffer:ReadFloat()
+end
+
 if not CLIENT then
     return MapPatcher.RegisterTool(TOOL)
 end
