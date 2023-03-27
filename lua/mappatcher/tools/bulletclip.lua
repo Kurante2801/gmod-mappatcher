@@ -3,7 +3,7 @@ TOOL.Base = "base_brush"
 TOOL.Description = "Does not let the bullets to go pass through."
 --------------------------------------------------------------------------------
 TOOL.TextureColor = Color(147,112,219,200)
-TOOL.TextureText = "#mappatcher.tools.bulletclip.title"
+TOOL.TextureText = "Bullet Clip"
 --------------------------------------------------------------------------------
 function TOOL:EntSetup( ent )
     ent:SetSolidFlags( FSOLID_CUSTOMBOXTEST + FSOLID_CUSTOMRAYTEST )

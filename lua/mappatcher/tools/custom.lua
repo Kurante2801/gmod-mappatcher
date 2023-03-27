@@ -4,8 +4,7 @@ TOOL.Base = "base_brush"
 TOOL.Description = "A combination of various other tools + extra. Probably something I should have done initially."
 --------------------------------------------------------------------------------
 TOOL.TextureColor = Color(155,155,155,200)
-TOOL.TextureText = "#mappatcher.tools.custom.title"
-
+TOOL.TextureText = "Custom"
 --------------------------------------------------------------------------------
 
 function TOOL:WriteToBuffer( buffer )
@@ -39,7 +38,7 @@ function TOOL:SetupObjectPanel( panel )
     local DLabel = vgui.Create( "DLabel", panel )
     DLabel:SetTextColor( Color( 255, 255, 255, 255 ) )
     DLabel:SetPos( 10, 10 )
-    DLabel:SetText( "#mappatcher.tools.custom.settings.name" )
+    DLabel:SetText( "Name:" )
 
     local TextEntry = vgui.Create( "DTextEntry", panel ) 
     TextEntry:SetPos( 50, 10 )
@@ -113,11 +112,11 @@ function TOOL:SetupObjectPanel( panel )
     local lblClip = vgui.Create( "DLabel", panel )
     lblClip:SetTextColor( Color( 255, 255, 255, 255 ) )
     lblClip:SetPos( 10, 10 )
-    lblClip:SetText( "#mappatcher.tools.custom.settings.clip" )
+    lblClip:SetText( "Clip:" )
     
     local cbxClipPlayer = vgui.Create( "DCheckBoxLabel", panel )
     cbxClipPlayer:SetPos( 55, 12 )
-    cbxClipPlayer:SetText( "#mappatcher.tools.custom.settings.player" )
+    cbxClipPlayer:SetText( "Player" )
     cbxClipPlayer:SetValue( self.clip_player )
     cbxClipPlayer:SizeToContents()
     cbxClipPlayer.OnChange = function( panel, val )
@@ -126,7 +125,7 @@ function TOOL:SetupObjectPanel( panel )
 
     local cbxClipProps = vgui.Create( "DCheckBoxLabel", panel )
     cbxClipProps:SetPos( 120, 12 )
-    cbxClipProps:SetText( "#mappatcher.tools.custom.settings.props" )
+    cbxClipProps:SetText( "Props" )
     cbxClipProps:SetValue( self.clip_prop )
     cbxClipProps:SizeToContents()
     cbxClipProps.OnChange = function( panel, val )
@@ -159,7 +158,7 @@ function TOOL:SetupObjectPanel( panel )
     local lblGroup = vgui.Create( "DLabel", panel )
     lblGroup:SetTextColor( Color( 255, 255, 255, 255 ) )
     lblGroup:SetPos( 10, 35 )
-    lblGroup:SetText( "#mappatcher.tools.custom.settings.block" )
+    lblGroup:SetText( "Block:" )
 
 
     local cmbGroup = vgui.Create( "DComboBox", panel )
@@ -175,7 +174,7 @@ function TOOL:SetupObjectPanel( panel )
 
     local cbxGroupInvert = vgui.Create( "DCheckBoxLabel", panel )
     cbxGroupInvert:SetPos( 170, 37 )
-    cbxGroupInvert:SetText( "#mappatcher.tools.custom.settings.invert" )
+    cbxGroupInvert:SetText( "Invert" )
     cbxGroupInvert:SetValue( self.group_invert )
     cbxGroupInvert:SizeToContents()
 
@@ -186,15 +185,15 @@ function TOOL:SetupObjectPanel( panel )
     local lblTexture = vgui.Create( "DLabel", panel )
     lblTexture:SetTextColor( Color( 255, 255, 255, 255 ) )
     lblTexture:SetPos( 10, 60 )
-    lblTexture:SetText( "#mappatcher.tools.custom.settings.texture" )
+    lblTexture:SetText( "Texture:" )
 
 
     local cmbGroup = vgui.Create( "DComboBox", panel )
     cmbGroup:SetPos( 55, 60 )
     cmbGroup:SetSize( 110, 20 )
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.invisible", "", self.texture == "")
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.forcefield", "forcefield", self.texture == "forcefield")
-    cmbGroup:AddChoice( "#mappatcher.tools.custom.settings.solid", "solid", self.texture == "solid")
+    cmbGroup:AddChoice( "Invisible", "", self.texture == "")
+    cmbGroup:AddChoice( "Forcefield", "forcefield", self.texture == "forcefield")
+    cmbGroup:AddChoice( "Solid", "solid", self.texture == "solid")
     cmbGroup.OnSelect = function( panel, index, value, data )
         self.texture = data
     end
@@ -204,7 +203,7 @@ function TOOL:SetupObjectPanel( panel )
     local lblColor = vgui.Create( "DLabel", panel )
     lblColor:SetTextColor( Color( 255, 255, 255, 255 ) )
     lblColor:SetPos( 10, 85 )
-    lblColor:SetText( "#mappatcher.tools.custom.settings.color" )
+    lblColor:SetText( "Color:" )
 
     local colorPicker = vgui.Create( "DColorMixer", panel )
     colorPicker:SetPos( 55, 85 )

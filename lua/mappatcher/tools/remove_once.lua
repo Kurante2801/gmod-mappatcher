@@ -1,6 +1,6 @@
 local TOOL = {}
 TOOL.Base = "base_brush"
-TOOL.Description = "Removes any entities that touches this brush when this brush spawns."
+TOOL.Description = "Removes any entities that touches this brush when the map starts or is reset."
 --------------------------------------------------------------------------------
 TOOL.TextureColor = Color(150, 0, 0, 200)
 TOOL.TextureText = "Remove Once"

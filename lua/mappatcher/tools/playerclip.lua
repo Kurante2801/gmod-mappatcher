@@ -5,7 +5,7 @@ TOOL.Description = "Collides only with players."
 --------------------------------------------------------------------------------
 
 TOOL.TextureColor = Color(255,200,0,200)
-TOOL.TextureText = "#mappatcher.tools.playerclip.title"
+TOOL.TextureText = "Player Clip"
 --------------------------------------------------------------------------------
 function TOOL:EntSetup( ent )
     ent:SetSolidFlags( FSOLID_CUSTOMBOXTEST )

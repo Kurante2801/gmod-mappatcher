@@ -34,7 +34,7 @@ function PANEL:Init()
 
     ----------------------------------------------------------------------------
     local title_panel = vgui.Create( "DPanel", self )
-    local mappatcher_menu_title = language.GetPhrase("#mappatcher.menu.title") .. " " .. MAPPATCHER_VERSION
+    local mappatcher_menu_title = "MapPatcher " .. MAPPATCHER_VERSION
     title_panel:SetSize(self:GetWide(),30)
     title_panel:SetPos(0,0)
     function title_panel:Paint( w, h)
@@ -175,7 +175,7 @@ function PANEL:Init()
     local submit_button = vgui.Create( "DButton", button_panel )
     submit_button:SetPos( 10, 10 )
     submit_button:SetSize( submit_button:GetParent():GetWide()/2-10, submit_button:GetParent():GetTall()-20 )
-    submit_button:SetText( "#mappatcher.menu.submit_changes" )
+    submit_button:SetText( "Submit Changes" )
     submit_button:SetTextColor( Color( 255, 255, 255 ) )
     submit_button:SetFont( "MapPatcherMenuButton" )
 
@@ -194,7 +194,7 @@ function PANEL:Init()
     local remove_button = vgui.Create( "DButton", button_panel )
     remove_button:SetPos( remove_button:GetParent():GetWide()/2+10, 10 )
     remove_button:SetSize( remove_button:GetParent():GetWide()/2-20, remove_button:GetParent():GetTall()-20 )
-    remove_button:SetText( "#mappatcher.menu.remove_object" )
+    remove_button:SetText( "Remove Object" )
     remove_button:SetTextColor( Color( 255, 255, 255 ) )
     remove_button:SetFont( "MapPatcherMenuButton" )
 

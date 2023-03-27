@@ -1,6 +1,6 @@
 local TOOL = {}
 TOOL.Base = "base_brush"
-TOOL.Description = "Removes any entities that touches this brush when this brush spawns."
+TOOL.Description = "Pushes props and players."
 --------------------------------------------------------------------------------
 TOOL.TextureColor = Color(0, 255, 0, 75)
 TOOL.TextureText = "Push"
