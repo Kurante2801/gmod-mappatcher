@@ -264,6 +264,8 @@ function TOOL.DataFunction(data, tbl)
 end
 
 function TOOL:WriteToBuffer( buffer )
+    buffer:WriteVector(self.point or Vector())
+
     buffer:WriteFloat(self.ang.p)
     buffer:WriteFloat(self.ang.y)
     buffer:WriteFloat(self.ang.r)
@@ -282,6 +284,8 @@ function TOOL:WriteToBuffer( buffer )
 end
 
 function TOOL:ReadFromBuffer( buffer )
+    self.point = buffer:ReadVector()
+
     self.ang.p = buffer:ReadFloat()
     self.ang.y = buffer:ReadFloat()
     self.ang.r = buffer:ReadFloat()
