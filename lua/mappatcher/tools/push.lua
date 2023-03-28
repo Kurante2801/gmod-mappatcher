@@ -25,6 +25,28 @@ function TOOL.DataFunction(data, tbl)
     return tbl
 end
 
+function TOOL:WriteToBuffer( buffer )
+    TOOL:GetBase().WriteToBuffer( self, buffer )
+
+    buffer:WriteFloat( self.ang.p )
+    buffer:WriteFloat( self.ang.y )
+    buffer:WriteFloat( self.ang.r )
+
+    buffer:WriteFloat( self.force )
+    buffer:WriteBool( self.visible )
+    buffer:WriteBool( self.props )
+    buffer:WriteBool( self.players )
+end
+
+function TOOL:ReadFromBuffer( buffer, len )
+    TOOL:GetBase().ReadFromBuffer(self, buffer)
+    self.ang = Angle(buffer:ReadFloat(), buffer:ReadFloat(), buffer:ReadFloat())
+    self.force = buffer:ReadFloat()
+    self.visible = buffer:ReadBool()
+    self.props = buffer:ReadBool()
+    self.players = buffer:ReadBool()
+end
+
 function TOOL:EntSetup(ent)
     ent:SetSolidFlags(FSOLID_CUSTOMBOXTEST)
 
