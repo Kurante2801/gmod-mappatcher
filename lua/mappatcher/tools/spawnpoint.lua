@@ -54,6 +54,12 @@ function TOOL:PostCleanupMap()
     self:UpdateEntity()
 end
 
+function TOOL:Terminate()
+    if IsValid(self.entity) then
+        self.entity:Remove()
+    end
+end
+
 hook.Add("PlayerSelectSpawn", "MapPatcher", function(ply)
     local spawns = {}
 
