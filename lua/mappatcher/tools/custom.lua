@@ -9,14 +9,33 @@ TOOL.TextureText = "Custom"
 
 function TOOL:WriteToBuffer( buffer )
     TOOL:GetBase().WriteToBuffer( self, buffer )
-    self.color = self.color
-    buffer:WriteString( util.TableToJSON(self.data) )
+    buffer:WriteBool(self.clip_bullet)
+
+    buffer:WriteUInt8(self.color.r)
+    buffer:WriteUInt8(self.color.g)
+    buffer:WriteUInt8(self.color.b)
+    buffer:WriteUInt8(self.color.a)
+
+    buffer:WriteBool(self.clip_player)
+    buffer:WriteBool(self.clip_prop)
+    buffer:WriteBool(self.clip_other)
+    buffer:WriteString(self.group)
+    buffer:WriteBool(self.group_invert)
+    buffer:WriteBool(self.group_player)
+    buffer:WriteString(self.texture)
 end
 
 function TOOL:ReadFromBuffer( buffer, len )
     TOOL:GetBase().ReadFromBuffer(self, buffer)
-    self.data = util.JSONToTable( buffer:ReadString( ) )
-    self.color = self.data.color
+    self.clip_bullet = buffer:ReadBool()
+    self.color = Color(buffer:ReadUInt8(), buffer:ReadUInt8(), buffer:ReadUInt8(), buffer:ReadUInt8())
+    self.clip_player = buffer:ReadBool()
+    self.clip_prop = buffer:ReadBool()
+    self.clip_other = buffer:ReadBool()
+    self.group = buffer:ReadString()
+    self.group_invert = buffer:ReadBool()
+    self.group_player = buffer:ReadBool()
+    self.texture = buffer:ReadString()
 end
 
 function TOOL.DataFunction(data, tbl)
@@ -51,18 +70,14 @@ end
 
 function TOOL:ObjectCreated()
     TOOL:GetBase().ObjectCreated(self)
-    local data = {}
-    data.clip_player = true
-    data.clip_prop = false
-    data.clip_bullet = false
-    data.clip_other = false
-    data.group = "everyone"
-    data.group_invert = false
-    data.texture = ""
-    data.color = Color(255,255,255)
-
-    self.data = data
-
+    self.clip_player = true
+    self.clip_prop = false
+    self.clip_bullet = false
+    self.clip_other = false
+    self.group = "everyone"
+    self.group_invert = false
+    self.texture = ""
+    self.color = Color(255,255,255)
 end
 
 --------------------------------------------------------------------------------
@@ -131,29 +146,6 @@ function TOOL:SetupObjectPanel( panel )
     cbxClipProps.OnChange = function( panel, val )
         self.clip_prop = val
     end
-
-    --[[
-    local cbxClipBullets = vgui.Create( "DCheckBoxLabel", panel )
-    cbxClipBullets:SetPos( 185, 12 )
-    cbxClipBullets:SetText( "Bullets" )
-    cbxClipBullets:SetValue( self.data.clip_bullet )
-    cbxClipBullets:SizeToContents()
-    cbxClipBullets.OnChange = function( panel, val )
-        self.data.clip_bullet = val
-    end
-
-    local cbxClipOther = vgui.Create( "DCheckBoxLabel", panel )
-    cbxClipOther:SetPos( 250, 12 )
-    cbxClipOther:SetText( "Other" )
-    cbxClipOther:SetValue( self.data.clip_other )
-    cbxClipOther:SizeToContents()
-    cbxClipOther.OnChange = function( panel, val )
-        self.data.clip_other = val
-    end
-    ]]
-
-
-
 
     local lblGroup = vgui.Create( "DLabel", panel )
     lblGroup:SetTextColor( Color( 255, 255, 255, 255 ) )
